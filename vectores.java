@@ -47,8 +47,8 @@ public class vectores{
             for (int i = 0; i <= this.indice; i++) {
                 System.out.println("Nombre: " + this.vectorPersona[i].getNombre() + 
                                    ", Apellido: " + this.vectorPersona[i].getApellido() + 
-                                   ", Peso: " + this.vectorPersona[i].getPeso() + 
-                                   ", Altura: " + this.vectorPersona[i].getAltura());
+                                   ", Peso: " + this.vectorPersona[i].getPeso() + "kg" + 
+                                   ", Altura: " + this.vectorPersona[i].getAltura() + "cm");
             }
         } else {
             System.out.println("El vector esta vacio");

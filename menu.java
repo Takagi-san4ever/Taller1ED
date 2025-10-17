@@ -1,145 +1,332 @@
 import java.util.Scanner;
 
 public class menu {
-    private Scanner sc;
-    private vectores vec; 
 
-    public menu() {
-        this.sc = new Scanner(System.in);
-    }
+    protected matriz nuevaMatriz;
+    protected int opcion;
+    protected Scanner scanner = new Scanner(System.in);
+    protected vectores vectores;
+    protected listaSimple lista = new listaSimple();
+    protected int max;
+    protected matriz matriz;
+    protected int opcionMenu;
 
-    
-    public void inicializarVector() {
-        System.out.print("¿Cuántas personas desea registrar? ");
-        int cantidad = 0;
-        while (true) {
-            try {
-                cantidad = Integer.parseInt(sc.nextLine());
-                if (cantidad > 0) {
-                    break;
-                } else {
-                    System.out.print("Por favor, ingrese un número mayor que 0: ");
-                }
-            } catch (NumberFormatException e) {
-                System.out.print("Entrada no válida. Ingrese un número entero: ");
-            }
-        }
-        this.vec = new vectores(cantidad);
-        System.out.println("Vector creado para almacenar hasta " + cantidad + " persona(s).\n");
-    }
-
-    
     public void mostrarMenu() {
-        int opcion;
-        do {
-            System.out.println("\n" + "=".repeat(50));
-            System.out.println("        MENÚ DE GESTIÓN DE PERSONAS");
-            System.out.println("=".repeat(50));
-            System.out.println("1. Agregar persona");
-            System.out.println("2. Mostrar personas");
-            System.out.println("3. Eliminar persona");
-            System.out.println("4. Buscar persona por nombre");
-            System.out.println("5. Salir");
-            System.out.print("Seleccione una opción (1-5): ");
 
-            opcion = sc.nextInt();
-            sc.nextLine(); // Limpiar buffer
+        do {
+            System.out.println("\n===== MENÚ DE ESTRUCTURAS DE DATOS =====");
+            System.out.println("1) Vector");
+            System.out.println("2) Matriz");
+            System.out.println("3) Lista Simple");
+            System.out.println("4) Pila (Proximamente)");
+            System.out.println("5) Salir");
+            System.out.print("Seleccione una opcion: ");
+            opcionMenu = scanner.nextInt();
+
+            switch (opcionMenu) {
+                case 1:
+                    mostrarVector();
+                    break;
+                case 2:
+                    mostrarMatriz();
+                    break;
+                case 3:
+                    mostrarLista();
+                    break;
+                case 4:
+                    mostrarPila();
+                    break;
+                case 5:
+                    System.out.println("Saliendo del programa...");
+                    ;
+                default:
+                    if (opcionMenu != 5) {
+                        System.out.println("Opcion no valida. Intente de nuevo.");
+                        scanner.nextLine();  // Limpiar el buffer
+                        break;
+                    }
+            }
+
+        } while (opcionMenu != 5);
+    }
+
+    public void mostrarVector() {
+        System.out.print("Antes de iniciar, indique el tamaño del vector: ");
+        max = scanner.nextInt();
+        vectores = new vectores(max);
+
+        System.out.println("Creando vector... \n");
+
+        if (!vectores.vectorLleno()) {
+
+            do {
+
+                mostrarOpciones();
+                opcion = scanner.nextInt();
+
+                switch (opcion) {
+                    case 1:
+                        if (!vectores.vectorLleno()) {
+                            System.out.print("Ingrese el nombre: ");
+                            String nombre = scanner.next();
+                            System.out.print("Ingrese el apellido: ");
+                            String apellido = scanner.next();
+                            System.out.print("Ingrese el peso: ");
+                            int peso = scanner.nextInt();
+                            System.out.print("Ingrese la altura: ");
+                            int altura = scanner.nextInt();
+
+                            persona p = new persona(nombre, apellido, peso, altura);
+                            vectores.agregarPersona(p);
+                        } else {
+                            System.out.println("El vector esta lleno");
+                        }
+                        break;
+
+                    case 2:
+                        vectores.mostrarVector();
+                        break;
+                    case 3:
+                        if (!vectores.vectorVacio()) {
+                            String nombre;
+                            System.out.print("Ingrese el nombre de la persona: ");
+                            nombre = scanner.next();
+                            int posicion = vectores.buscarPersona(nombre);
+                            vectores.eliminarPersona(posicion);
+                            System.out.println("Persona " + nombre +
+                                    " eliminada del vector");
+                        } else {
+                            System.out.println("El vector esta vacio");
+                        }
+                        break;
+                    case 4:
+                        if (!vectores.vectorVacio()) {
+                            System.out.print("Ingrese el nombre a buscar: ");
+                            String nombre = scanner.next();
+                            vectores.buscarPersona(nombre);
+                            System.out.println("persona encontrada: " + nombre +
+                                    " en la posicion " + vectores.buscarPersona(nombre));
+                        } else {
+                            System.out.println("El vector esta vacio");
+                        }
+                    default:
+                        break;
+                }
+
+            } while (opcion != 5);
+
+        } else {
+            System.out.println("El vector esta lleno");
+        }
+    }
+
+    public void mostrarMatriz() {
+
+        System.out.print("Antes de iniciar, indique el numero de filas: ");
+        int filas = scanner.nextInt();
+        System.out.print("Indique el numero de columnas: ");
+        int columnas = scanner.nextInt();
+        nuevaMatriz = new matriz(filas, columnas);
+
+        System.out.println("Creando matriz... \n");
+
+        if (!nuevaMatriz.matrizVacia()) {
+
+            do {
+
+                mostrarOpciones();
+                opcion = scanner.nextInt();
+
+                switch (opcion) {
+                    case 1:
+                        if (!nuevaMatriz.matrizLlena()) {
+                            System.out.print("Ingrese el nombre: ");
+                            String nombre = scanner.next();
+                            System.out.print("Ingrese el apellido: ");
+                            String apellido = scanner.next();
+                            System.out.print("Ingrese el peso: ");
+                            int peso = scanner.nextInt();
+                            System.out.print("Ingrese la altura: ");
+                            int altura = scanner.nextInt();
+
+                            persona p = new persona(nombre, apellido, peso, altura);
+                            nuevaMatriz.agregar(p);
+                        } else {
+                            System.out.println("La matriz esta llena");
+                        }
+                        break;
+
+                    case 2:
+                        nuevaMatriz.mostrarMatriz();
+                        break;
+                    case 3:
+                        if (!nuevaMatriz.matrizVacia()) {
+                            System.out.print("Ingrese el nombre de la persona a eliminar: ");
+                            String nombre = scanner.next();
+                            int posicion = nuevaMatriz.buscarPersona(nombre);
+                            nuevaMatriz.eliminar(posicion);
+                        } else {
+
+                        }
+                        break;
+                    case 4:
+                        if (!nuevaMatriz.matrizVacia()) {
+                            System.out.print("Ingrese el nombre a buscar: ");
+                            String nombre = scanner.next();
+                            nuevaMatriz.buscarPersona(nombre);
+
+                            if (nuevaMatriz.buscarPersona(nombre) != -1) {
+                                System.out.println("persona encontrada: " + nombre +
+                                        " en la posicion " + nuevaMatriz.buscarPersona(nombre));
+                            } else {
+                                System.out.println("Persona no encontrada en la matriz");
+                            }
+
+                        } else {
+                            System.out.println("La matriz esta vacia");
+                        }
+                    case 5:
+                        nuevaMatriz.mostrarDiagonalPrincipal();
+                        break;
+                    case 6:
+                        nuevaMatriz.mostrarDiagonalSecundaria();
+                        break;
+                    case 7:
+                        System.out.println("Saliendo de la matriz...");
+                    default:
+                        break;
+                }
+
+            } while (opcion != 7);
+
+        } else {
+            System.out.println("La matriz esta vacia");
+        }
+    }
+
+    public void mostrarLista() {
+
+        listaSimple lista = new listaSimple();
+
+        do {
+
+            mostrarOpciones();
+            opcion = scanner.nextInt();
 
             switch (opcion) {
                 case 1:
-                    agregarPersona();
+                    System.out.print("Ingrese el nombre: ");
+                    String nombre = scanner.next();
+                    System.out.print("Ingrese el apellido: ");
+                    String apellido = scanner.next();
+                    System.out.print("Ingrese el peso: ");
+                    int peso = scanner.nextInt();
+                    System.out.print("Ingrese la altura: ");
+                    int altura = scanner.nextInt();
+
+                    persona p = new persona(nombre, apellido, peso, altura);
+                    lista.agregarAlInicio(p);
                     break;
+
                 case 2:
-                    mostrarPersonas();
+                    lista.mostrarLista();
                     break;
                 case 3:
-                    eliminarPersona();
+                    if (!lista.listaVacia()) {
+                        String nombreEliminar;
+                        System.out.print("Ingrese el nombre de la persona: ");
+                        nombreEliminar = scanner.next();
+                        lista.eliminarDelInicio(nombreEliminar);
+                    } else {
+                        System.out.println("La lista esta vacia");
+                    }
                     break;
                 case 4:
-                    buscarPersona();
-                    break;
-                case 5:
-                    System.out.println("\nGracias por usar el sistema. ¡Hasta luego!");
-                    break;
+                    if (!lista.listaVacia()) {
+                        System.out.print("Ingrese el nombre a buscar: ");
+                        String nombreBuscar = scanner.next();
+                        lista.buscarPersona(nombreBuscar);
+                    } else {
+                        System.out.println("La lista esta vacia");
+                    }
                 default:
-                    System.out.println("Opción no válida. Por favor, elija entre 1 y 5.");
+                    break;
             }
+
         } while (opcion != 5);
     }
 
-    
-    private void agregarPersona() {
-        if (vec.vectorLleno()) {
-            System.out.println("No se pueden agregar más personas: el vector está lleno.");
-            return;
-        }
+    public void mostrarPila() {
+        pila nuevaPila = new pila();
 
-        System.out.print("Nombre: ");
-        String nombre = sc.nextLine();
+        do {
 
-        System.out.print("Apellido: ");
-        String apellido = sc.nextLine();
+            mostrarOpciones();
+            opcion = scanner.nextInt();
 
-        System.out.print("Peso (kg): ");
-        float peso = Float.parseFloat(sc.nextLine());
+            switch (opcion) {
+                case 1:
+                    System.out.print("Ingrese el nombre: ");
+                    String nombre = scanner.next();
+                    System.out.print("Ingrese el apellido: ");
+                    String apellido = scanner.next();
+                    System.out.print("Ingrese el peso: ");
+                    int peso = scanner.nextInt();
+                    System.out.print("Ingrese la altura: ");
+                    int altura = scanner.nextInt();
 
-        System.out.print("Altura (m): ");
-        float altura = Float.parseFloat(sc.nextLine());
+                    persona p = new persona(nombre, apellido, peso, altura);
+                    nuevaPila.push(p);
+                    break;
 
-        persona p = new persona(nombre, apellido, peso, altura);
-        vec.agregarPersona(p);
-        System.out.println("Persona agregada correctamente.\n");
+                case 2:
+                    nuevaPila.mostrarPila();
+                    break;
+                case 3:
+                    if (!nuevaPila.pilaVacia()) {
+                        nuevaPila.pop();
+                    } else {
+                        System.out.println("La pila esta vacia");
+                    }
+                    break;
+                case 4:
+                    if (!nuevaPila.pilaVacia()) {
+                        System.out.print("Ingrese el nombre a buscar: ");
+                        String nombreBuscar = scanner.next();
+                        nuevaPila.buscarEnPila(nombreBuscar);
+                    } else {
+                        System.out.println("La pila esta vacia");
+                    }
+                default:
+                    break;
+            }
+
+        } while (opcion != 5);
     }
 
-    
-    private void mostrarPersonas() {
-        if (vec.vectorVacio()) {
-            System.out.println("No hay personas registradas.");
-        } else {
-            System.out.println("\n--- LISTA DE PERSONAS REGISTRADAS ---");
-            vec.mostrarVector();
-        }
-    }
-
-    
-    private void eliminarPersona() {
-        if (vec.vectorVacio()) {
-            System.out.println("No hay personas para eliminar.");
-            return;
-        }
-
-        System.out.print("Ingrese la posición a eliminar (0-" + vec.getIndice() + "): ");
-        int posicion = Integer.parseInt(sc.nextLine());
-
-        vec.eliminarPersona(posicion);
-    }
-
-    
-    private void buscarPersona() {
-        if (vec.vectorVacio()) {
-            System.out.println("No hay personas registradas.");
-            return;
+    public void mostrarOpciones() {
+        // menu especial para matriz
+        if (opcionMenu == 2 && nuevaMatriz.matrizCuadrada()) {
+            System.out.print("\nSeleccione una opcion: ");
+            System.out.println("\n===== MENÚ PRINCIPAL =====");
+            System.out.println("1) Agregar persona");
+            System.out.println("2) Mostrar personas");
+            System.out.println("3) Eliminar persona");
+            System.out.println("4) Buscar persona");
+            System.out.println("5) Mostrar diagonal principal");
+            System.out.println("6) Mostrar diagonal secundaria");
+            System.out.println("7) Salir");
+        // otro menu para matriz no cuadrada o otros
+        } else if (opcionMenu == 2 || opcionMenu != 2) {
+            System.out.print("\nSeleccione una opcion: ");
+            System.out.println("\n===== MENÚ PRINCIPAL =====");
+            System.out.println("1) Agregar persona");
+            System.out.println("2) Mostrar personas");
+            System.out.println("3) Eliminar persona");
+            System.out.println("4) Buscar persona");
+            System.out.println("5) Salir");
         }
 
-        System.out.print("Ingrese el nombre a buscar: ");
-        String nombre = sc.nextLine();
-
-        int pos = vec.buscarPersona(nombre);
-        if (pos != -1) {
-            persona p = vec.getVectorPersona()[pos];
-            System.out.println("\nPersona encontrada en posición " + pos + ":");
-            System.out.println("Nombre: " + p.getNombre());
-            System.out.println("Apellido: " + p.getApellido());
-            System.out.println("Peso: " + p.getPeso() + " kg");
-            System.out.println("Altura: " + p.getAltura() + " m");
-        }
     }
 
-   
-    public static void main(String[] args) {
-        menu sistema = new menu();
-        sistema.inicializarVector(); 
-        sistema.mostrarMenu();       
-    }
 }
-// que se cambie esta monda 

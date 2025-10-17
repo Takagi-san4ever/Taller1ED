@@ -2,11 +2,11 @@ public class persona{
     // 1 definir atributos
     protected String nombre;
     protected String apellido;
-    protected float peso;
-    protected float altura;
+    protected int peso;
+    protected int altura;
 
     //2. metodos constructores
-    public persona(String nombre, String apellido, float peso, float altura) {
+    public persona(String nombre, String apellido, int peso, int altura) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.peso = peso;
@@ -30,13 +30,13 @@ public class persona{
     public float getPeso() {
         return peso;
     }
-    public void setPeso(float peso) {
+    public void setPeso(int peso) {
         this.peso = peso;
     }
-    public float getAltura() {
+    public int getAltura() {
         return altura;
     }
-    public void setAltura(float altura) {
+    public void setAltura(int altura) {
         this.altura = altura;
     }
     
