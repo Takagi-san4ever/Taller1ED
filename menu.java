@@ -18,7 +18,7 @@ public class menu {
             System.out.println("1) Vector");
             System.out.println("2) Matriz");
             System.out.println("3) Lista Simple");
-            System.out.println("4) Pila (Proximamente)");
+            System.out.println("4) Pila ");
             System.out.println("5) Salir");
             System.out.print("Seleccione una opcion: ");
             opcionMenu = scanner.nextInt();
@@ -74,7 +74,7 @@ public class menu {
                             System.out.print("Ingrese el peso: ");
                             int peso = scanner.nextInt();
                             System.out.print("Ingrese la altura: ");
-                            int altura = scanner.nextInt();
+                            float altura = scanner.nextFloat();
 
                             persona p = new persona(nombre, apellido, peso, altura);
                             vectores.agregarPersona(p);
@@ -147,7 +147,7 @@ public class menu {
                             System.out.print("Ingrese el peso: ");
                             int peso = scanner.nextInt();
                             System.out.print("Ingrese la altura: ");
-                            int altura = scanner.nextInt();
+                            float altura = scanner.nextFloat();
 
                             persona p = new persona(nombre, apellido, peso, altura);
                             nuevaMatriz.agregar(p);
@@ -222,7 +222,7 @@ public class menu {
                     System.out.print("Ingrese el peso: ");
                     int peso = scanner.nextInt();
                     System.out.print("Ingrese la altura: ");
-                    int altura = scanner.nextInt();
+                    float altura = scanner.nextFloat();
 
                     persona p = new persona(nombre, apellido, peso, altura);
                     lista.agregarAlInicio(p);
@@ -273,7 +273,7 @@ public class menu {
                     System.out.print("Ingrese el peso: ");
                     int peso = scanner.nextInt();
                     System.out.print("Ingrese la altura: ");
-                    int altura = scanner.nextInt();
+                    float altura = scanner.nextFloat();
 
                     persona p = new persona(nombre, apellido, peso, altura);
                     nuevaPila.push(p);
